@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 3 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: #fefefe;
+      border: 3px solid black;	
+    }
+    p {
+      padding: 30px;
+	  font-size: 2.5ex; /* øker tekststørrelse */
+      background-color: #66BB00;
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Registrer bestilling </h1>
+  
+  Velg antall middager
+  <select id="antallMiddager">
+    <option value="2"> To middager </option>
+	<option value="3"> Tre middager </option>
+  </select>
+
+  Velg uke
+  <select id="velgUke"></select>
+  
+  Antall barn
+  <select id="antallBarn"></select>
+  
+  Antall ungdommer
+  <select id="antallUngdommer"></select>
+
+  Antall voksne  
+  <select id="antallVoksne"></select>
+
+  <button id="registrer">Registrer</button>
+  
+  <p id="bekreftelse"></p>
+  
+  <button id="beregnbehov">Beregn totalbehov for hvert fiskeslag i uke 26 </button>
+
+  <p id="totalbehov"></p>  
+</div>
+
+<script>
+// Henter HTML-elementene
+var velgUkeEl = document.querySelector("#velgUke");
+var antallMiddagerEl = document.querySelector("#antallMiddager");
+var antallBarnEl = document.querySelector("#antallBarn");
+var antallUngdommerEl = document.querySelector("#antallUngdommer");
+var antallVoksneEl = document.querySelector("#antallVoksne");
+var registrerKnappEl = document.querySelector("#registrer");
+var bekreftelseEl = document.querySelector("#bekreftelse");
+var beregnKnappEl = document.querySelector("#beregnbehov");
+var totalBehovEl = document.querySelector("#totalbehov");
+
+// Legger til lyttere på knappene
+registrerKnappEl.addEventListener("click", registrer);
+beregnKnappEl.addEventListener("click", beregnRaavarer);
+
+// Fyller nedtrekkselementene:
+// velgUkeEl får tallene 1-52 (én for hver av årets uker)
+for (var i = 1; i <= 52; i++) {
+  // Lager et option-element
+  var optionEl = document.createElement("option");
+  optionEl.innerHTML = i;
+  optionEl.value = i;
+
+  // Legger til option-elementet på nettsiden
+  velgUkeEl.appendChild(optionEl);
+}
+
+// antallBarnEl, antallUngdommerEl og antallVoksneEl får verdiene 1-10
+for (var i = 1; i <= 10; i++) {
+  // Lager et option-element
+  var optionEl = document.createElement("option");
+  optionEl.innerHTML = i;
+  optionEl.value = i;
+
+  // Legger til option-elementet på nettsiden
+  antallBarnEl.appendChild(optionEl);
+}
+for (var i = 1; i <= 10; i++) {
+  // Lager et option-element
+  var optionEl = document.createElement("option");
+  optionEl.innerHTML = i;
+  optionEl.value = i;
+
+  // Legger til option-elementet på nettsiden
+  antallUngdommerEl.appendChild(optionEl);
+}
+for (var i = 1; i <= 10; i++) {
+  // Lager et option-element
+  var optionEl = document.createElement("option");
+  optionEl.innerHTML = i;
+  optionEl.value = i;
+
+  // Legger til option-elementet på nettsiden
+  antallVoksneEl.appendChild(optionEl);
+}
+
+// Lager datasettet for bestillinger
+var bestillinger = [
+  { uke: 26, antallMiddager: 2, barn: 1, ungdom: 1, voksne: 2 },
+  { uke: 26, antallMiddager: 3, barn: 0, ungdom: 2, voksne: 2 },
+  { uke: 26, antallMiddager: 2, barn: 0, ungdom: 0, voksne: 1 },
+  { uke: 26, antallMiddager: 3, barn: 0, ungdom: 0, voksne: 2 },
+  { uke: 26, antallMiddager: 2, barn: 3, ungdom: 0, voksne: 2 },
+  { uke: 27, antallMiddager: 2, barn: 1, ungdom: 1, voksne: 2 },
+  { uke: 27, antallMiddager: 2, barn: 1, ungdom: 1, voksne: 2 },
+];
+
+// Lager datasettet for råvarer
+var raavarer = [
+  { uke: 26, middag3: false, fisk: "Torsk", barn: 200, ungdom: 300, voksne: 350, totalGram: 0 },
+  { uke: 00, middag3: false, fisk: "Sei", barn: 200, ungdom: 300, voksne: 350, totalGram: 0 },
+  { uke: 00, middag3: false, fisk: "Makrell", barn: 200, ungdom: 300, voksne: 350, totalGram: 0 },
+  { uke: 00, middag3: false, fisk: "Reker", barn: 250, ungdom: 500, voksne: 500, totalGram: 0 },
+  { uke: 26, middag3: false, fisk: "Krabbe", barn: 300, ungdom: 500, voksne: 600, totalGram: 0 },
+  { uke: 26, middag3: true, fisk: "Laks", barn: 200, ungdom: 300, voksne: 350, totalGram: 0 }
+]; 
+
+function beregnRaavarer() {
+ 
+  // Angir ukenr i starten av funksjonen. Oppgaven ber bare om beregning 
+  // for uke 26, men det er fint om den kan endres, vi har derfor lagret 
+  // verdien i en variabel.
+  var ukenr = 26;
+ 
+  // Tømmer avsnittet der vi vil skrive ut totalbehovet og lager en overskrift
+  totalBehovEl.innerHTML = "<h2> Behov  for uke " + ukenr + "</h2>";
+
+  // Går gjennom alle råvarene
+  for (var i = 0; i < raavarer.length; i++) {
+    // Undersøker om råvarene er med i menyen for angitt ukenummer 
+    if (raavarer[i].uke === ukenr) {  
+      // Går gjennom alle bestillingene
+      for (var j = 0; j < bestillinger.length; j++) {
+        // Undersøker om bestillingen gjelder for angitt ukenummer  
+        if (bestillinger[j].uke === ukenr) {
+          // Hvis råvaren er i middag 3 OG bestillingen er for tre middager
+          if (raavarer[i].middag3 && bestillinger[j].antallMiddager === 3) {
+            // Øker råvarens "totalGram-verdi" basert på antall barn, ungdom og voksne
+            raavarer[i].totalGram += bestillinger[j].barn * raavarer[i].barn;
+            raavarer[i].totalGram += bestillinger[j].ungdom * raavarer[i].ungdom;
+            raavarer[i].totalGram += bestillinger[j].voksne * raavarer[i].voksne;
+          } else if (!raavarer[i].middag3) { 
+            // Hvis råvaren ikke er i middag 3 skal alle ha den
+            // Øker råvarens "totalGram-verdi" basert på antall barn, ungdom og voksne
+        	raavarer[i].totalGram += bestillinger[j].barn * raavarer[i].barn;
+            raavarer[i].totalGram += bestillinger[j].ungdom * raavarer[i].ungdom;
+            raavarer[i].totalGram += bestillinger[j].voksne * raavarer[i].voksne;
+          } 
+        }
+      }
+      
+      // Skriver ut totalbehovet av gjeldende råvare på nettsiden	  
+      totalBehovEl.innerHTML += raavarer[i].totalGram + " gram " + raavarer[i].fisk + "<br>";
+    }
+  }
+}
+
+// Funksjonen registrer() registrerer bestillingsinformasjon i bestillinger-arrayen
+function registrer() {
+  // Henter alle verdiene brukeren har angitt
+  var ukenr = Number(velgUkeEl.value);
+  var antallMiddager = Number(antallMiddagerEl.value);
+  var antallBarn = Number(antallBarnEl.value);
+  var antallUngdommer = Number(antallUngdommerEl.value);
+  var antallVoksne = Number(antallVoksneEl.value);
+
+  // Skriver ut en bekreftelse til brukeren  
+  bekreftelseEl.innerHTML  = antallBarn + " barn, ";
+  bekreftelseEl.innerHTML += antallUngdommer + " ungdommer og ";
+  bekreftelseEl.innerHTML += antallVoksne + " voksne er registrert med <br>";
+  bekreftelseEl.innerHTML += antallMiddager + " middager i uke ";
+  bekreftelseEl.innerHTML += ukenr;
+  
+  // Legger til bestillingen i arrayen bestillinger
+  bestillinger.push( 
+    { uke: ukenr, 
+      antallMiddager: antallMiddager, 
+      barn: antallBarn, 
+      ungdom: antallUngdommer, 
+      voksne: antallVoksne } 
+  );
+}
+
+</script>
+
+</body>
+</html>

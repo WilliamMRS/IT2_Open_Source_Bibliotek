@@ -1,0 +1,30 @@
+body {
+	background-color: Moccasin;
+
+}
+h1 h2{
+	color: blue;
+}
+#canvas {
+	background-color: lightgrey;
+}
+.slider{
+	color:black;
+	width: 300px;
+}
+
+#wrapper {
+    display: flex;
+}
+
+#wrapper div {
+    padding: 0 20px;
+}
+
+label {
+    line-height: 50px;
+}
+
+#tid1, #tid2, #temp1, #temp2 {
+    width: 50px;
+}

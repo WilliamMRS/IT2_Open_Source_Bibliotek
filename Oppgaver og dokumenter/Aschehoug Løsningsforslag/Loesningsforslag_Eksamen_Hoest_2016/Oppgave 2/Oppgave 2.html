@@ -1,0 +1,146 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 2 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;	
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: #c4b8ce;
+      border: 3px solid black;	
+    }
+    #bekreftelse {
+      padding: 30px;
+      font-size: 4ex; /* øker tekststørrelse */
+    }
+    .feil {
+      background-color: #DD0000;
+    }
+    .godkjent {
+      background-color: #66BB00;
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Bestill matkasser </h1>
+  
+  <p>
+    Velg antall middager <br>
+    <input type="radio" name="middager" id="tomiddager" checked> To
+    <input type="radio" name="middager" id="tremiddager"> Tre
+  </p>
+  
+  Antall personer
+  <input type="number" id="antallpersoner">
+  
+  Bestillers navn
+  <input type="text" id="navn">
+  
+  Bestillers adresse
+  <input type="text" id="adresse">
+
+  <button>Bestill</button>
+  
+  <p id="bilder"></p>
+  
+  <p id="bekreftelse"></p>
+  
+</div>
+
+<script>
+// Henter inn HTML-elementer
+var tomiddagerEl = document.querySelector("#tomiddager");
+var antallpersonerEl = document.querySelector("#antallpersoner");
+var navnEl = document.querySelector("#navn");
+var adresseEl = document.querySelector("#adresse");
+var knappEl = document.querySelector("button");
+var bilderEl = document.querySelector("#bilder");
+var bekreftelseEl = document.querySelector("#bekreftelse");
+
+// Legger til lytter på knappen
+knappEl.addEventListener("click", bekreft);
+
+// Funksjonen bekreft() kjører når knappen trykkes
+function bekreft() {
+  // Registrerer antall personer i en variabel
+  var antallpersoner = Number(antallpersonerEl.value);
+  
+  // Lager en variabel for antall middager
+  var antallmiddager = 0;
+
+  // Finner antall middager 
+  if (tomiddagerEl.checked) {
+    antallmiddager = 2;
+  } else {
+    antallmiddager = 3;
+  }
+ 
+  // Tømmer p-elementet der bildene skal tegnes opp 
+  bilderEl.innerHTML = "";
+
+  // Lager en løkke som tegner opp like mange middagsbilder som 
+  // det er bestilte middager.
+  for (var i = 0; i < antallmiddager; i++) {
+    // Lager et nytt img-element  
+    var bilde = document.createElement("img");
+   
+    // Angir attributter for img-elementet   
+    bilde.src = "middag.jpg";
+    bilde.width = "150";
+    bilde.height = "150";
+
+    // Legger til img-elementet på nettsiden
+    bilderEl.appendChild(bilde);
+  }  
+  
+  // Beregner prisen. Ganger antall middag med antall personer for 
+  // finne antall måltider.
+  var antallMaaltider = antallmiddager * antallpersoner;
+  
+  // Lager en variabel for prisen
+  var pris = 0;
+
+  // Beregner prisen basert på antall personer.
+  if (antallpersoner >= 5) {
+    pris = antallMaaltider * 70;
+  } else {
+    pris = antallMaaltider * 80;
+  }
+ 
+  // Angir en begrensning for antall personer. Tallet kan ikke 
+  // være mindre enn 1 eller større enn 10.   
+  if (antallpersoner < 1 || antallpersoner > 10) {
+    // Hvis feil antall angis CSS-klassen "feil" for bekreftelse-elementet
+    bekreftelseEl.className = "feil";
+    
+    // Skriver ut en feilmelding i bekreftelse-elementet
+    bekreftelseEl.innerHTML = "Du må angi mellom 0 og 10 personer.";
+  } else {
+    // Hvis godkjent angis CSS-klassen "godkjent" for bekreftelse-elementet
+    bekreftelseEl.className = "godkjent";
+    
+    // Skriver ut en bekreftelse i bekreftelse-elementet
+	bekreftelseEl.innerHTML  = antallmiddager + " middager til ";
+    bekreftelseEl.innerHTML += antallpersoner + " personer er bestilt av: <br>";
+    bekreftelseEl.innerHTML += navnEl.value + "<br>";
+    bekreftelseEl.innerHTML += adresseEl.value + "<br>";
+	bekreftelseEl.innerHTML += "Totalpris: " + pris + " kr.";
+  }
+}
+
+</script>
+
+</body>
+</html>

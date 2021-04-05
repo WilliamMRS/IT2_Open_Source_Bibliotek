@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 3 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;	
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: #fefefe;
+      border: 3px solid black;	
+    }
+    #pris {
+      background-color: lightblue;
+      padding: 10px;
+      height: 100px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+  <h1> Bestill reise </h1>
+  <h2> Velg sommer/vinter </h2>
+  
+  <input type="radio" name="sesong" id="radioSommer" checked> Sommer
+  <input type="radio" name="sesong" id="radioVinter"> Vinter 
+  
+  <h2> Velg antall enkeltrom/dobbeltrom </h2>
+  Enkeltrom
+  <input type="number" id="enkeltrom"> 
+  Dobbeltrom
+  <input type="number" id="dobbeltrom">
+  
+  <h2> Kulturpass? </h2>
+  <p> Kulturpasset gjelder for alle i reisefølget. </p>
+  
+  <input type="radio" name="kulturpass" id="radioJaPass" checked> Ja
+  <input type="radio" name="kulturpass" id="radioNeiPass"> Nei   
+  
+  <h2> Velg by </h2>
+  <select id="velgBy">
+  </select>
+
+  <h2> Velg hotell </h2>
+  <select id="hotellListe">
+  </select>  
+  
+  <div id="pris">
+  </div>
+</div>
+
+<script>
+// Henter HTML-elementer
+var radioSommerEl = document.querySelector("#radioSommer");
+var radioVinterEl = document.querySelector("#radioVinter");
+var enkeltromEl = document.querySelector("#enkeltrom");
+var dobbeltromEl = document.querySelector("#dobbeltrom");
+var radioJaPassEl = document.querySelector("#radioJaPass");
+var radioNeiPassEl = document.querySelector("#radioNeiPass");
+var hotellListeEl = document.querySelector("#hotellListe");
+var velgByEl = document.querySelector("#velgBy");
+var prisEl = document.querySelector("#pris");
+
+// Legger til lyttere
+radioSommerEl.addEventListener("click", beregn);
+radioVinterEl.addEventListener("click", beregn);
+enkeltromEl.addEventListener("input", beregn);
+dobbeltromEl.addEventListener("input", beregn);
+radioJaPassEl.addEventListener("click", beregn);
+radioNeiPassEl.addEventListener("click", beregn);
+hotellListeEl.addEventListener("change", beregn);
+velgByEl.addEventListener("change", listHoteller);
+
+// Lager variabler for tilleggspriser
+var enkeltromTillegg = 300;
+var kulturpassPris = 700;
+
+// Variabelen sommer er true hvis sommer er 
+// valgt og false hvis vinter er valgt.
+var sommer = true;
+
+// Variabelen valgtByIndeks inneholder indeksen
+// til valgt by i byer-arrayen (se arrayen nedenfor).
+var valgtByIndeks = 0;
+
+// Lager et datasett for hver av byene.
+// Oppgaven forventer bare en løsning for New York, 
+// de andre arrayene nedenfor kan fylles med hoteller 
+// for å utvide applikasjonen.
+var hotellerNewyork = [
+  { hotell: "Aurora", sommer: 590, vinter: 690 },
+  { hotell: "Downtown", sommer: 660, vinter: 750 },
+  { hotell: "City Hall", sommer: 450, vinter: 530 },
+  { hotell: "Wilmont", sommer: 660, vinter: 880 },
+  { hotell: "Chelsea inn", sommer: 450, vinter: 560 }
+];
+
+var hotellerStpetersburg = [];
+var hotellerAmsterdam = [];
+var hotellerRoma = [];
+
+// Samler datasettene i en array.
+// Hvert objekt i byer-arrayen inneholder et bynavn 
+// og en array med hoteller (laget ovenfor).
+var byer = [
+  { by: "New York", hoteller: hotellerNewyork },
+  { by: "St. Petersburg", hoteller: hotellerStpetersburg },
+  { by: "Amsterdam", hoteller: hotellerAmsterdam },
+  { by: "Roma", hoteller: hotellerRoma },
+];
+
+// Lager et option-element for hver by i nedtrekksmenyen 
+// som vi allerede har laget
+for (var i = 0; i < byer.length; i++) {
+  // Lager et nytt option-element
+  var optionEl = document.createElement("option");
+  
+  // Den synlige teksten i option-elementet er byens navn
+  optionEl.innerHTML = byer[i].by;
+  
+  // Den "usynlige" verdien til option-elementet 
+  // er byens indeks i byer-arrayen
+  optionEl.value = i;
+ 
+  // Legger til option-elementet i nedtrekksmenyen
+  velgByEl.appendChild(optionEl);
+}
+
+// Lager en liste over hoteller ved oppstart av nettsiden
+listHoteller();
+
+// Funksjon listHoteller fyller nedtrekksmenyen for hotellvalg
+function listHoteller () {
+  // Sjekker hvilken by som er valgt
+  valgtByIndeks = Number(velgByEl.value);
+
+  // Tømmer nedtrekksmenyen
+  hotellListeEl.innerHTML = "";  
+
+  // Går gjennom alle hotellene i valgt by og lager 
+  // ett option-element for hver av dem
+  for (var j = 0; j < byer[valgtByIndeks].hoteller.length; j++) {
+    // Lager et nytt option-element 
+    var optionEl = document.createElement("option");
+
+	// Den synlige teksten i option-elementet er hotellets navn
+    optionEl.innerHTML = byer[valgtByIndeks].hoteller[j].hotell;
+
+    // Den "usynlige" verdien til option-elementet 
+    // er hotellets indeks i hoteller-arrayen
+	optionEl.value = j;
+	
+	// Legger til option-elementet i nedtrekksmenyen
+    hotellListeEl.appendChild(optionEl);
+  }
+}
+
+// Funksjonen beregn() regner ut totalprisen 
+// og skriver den ut på nettsiden
+function beregn () {
+  // Lager en variabel for å holde på totalprisen
+  var totalpris = 0;
+
+  // Finn sommer/vinter
+  if (radioSommerEl.checked) {
+    sommer = true;
+  } else {
+    sommer = false;
+  }
+  
+  // Teller opp antall rom
+  var antallEnkeltrom = Number(enkeltromEl.value);
+  var antallDobbeltrom = Number(dobbeltromEl.value);
+  var antallRom = antallEnkeltrom + antallDobbeltrom; 
+
+  // Antar at alle eller ingen av de reisende 
+  // kjøper et kulturpass. Hvis kulturpass er valgt 
+  // regner vi ut prisen for alle reisende.  
+  if (radioJaPassEl.checked) {
+    // Hvert enkeltrom har én person, mens hvert dobbeltrom har to
+    var antallReisende = antallEnkeltrom + 2 * antallDobbeltrom; 
+	
+    // Øker totalprisen med prisen for kulturpassene
+    totalpris += antallReisende * kulturpassPris;
+  }  
+  
+  // Legger til tillegg for enkeltrom
+  if (antallEnkeltrom > 0) {
+    totalpris += antallEnkeltrom * enkeltromTillegg;
+  }
+  
+  // Finner ut hvilket hotell som er valgt
+  var valgtHotell = Number(hotellListeEl.value);
+
+  // Øker totalprisen med sommer- eller vinterpris ganger antall rom
+  if (sommer) {
+    totalpris += byer[valgtByIndeks].hoteller[valgtHotell].sommer * antallRom;  
+  } else {
+    totalpris += byer[valgtByIndeks].hoteller[valgtHotell].vinter * antallRom;
+  }
+  
+  // Skriver ut prisen på nettsiden
+  prisEl.innerHTML = "<h1> Samlet pris </h1>" + totalpris;
+}
+
+</script>
+
+</body>
+</html>

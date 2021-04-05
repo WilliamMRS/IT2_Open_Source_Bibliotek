@@ -1,0 +1,161 @@
+<!doctype html>
+<html>
+
+<head>
+<title> Oppgave 1 </title>
+  <meta charset= "UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .innpakning {
+      width: 750px;
+      margin: auto;
+      font-size: 0; /* Tar bort mellomrom mellom bildene */
+    }
+    h1 {
+      width: 650px;
+      margin: auto;
+      background-color: lightblue;
+      padding: 50px;
+      margin-top: 50px;
+      margin-bottom: 30px;
+    }
+    img:hover {
+      opacity: 0.7; /* gjør bilder litt gjennomsiktige */
+      cursor: pointer; /* gjør om musepeker til en hånd */
+    }
+    .forgrunnsvindu {
+      margin: auto;
+      position: relative; /* plasserer elementet relativt til sin posisjon */
+      top: -350px; /* "trekker" elementet 250 piksler oppover */
+      background-color: #323232;
+    }
+    .roma {
+      width: 854px;
+      height: 520px;
+      padding: 20px;
+      display: none; /* skjuler elementet */
+    }
+    .petersburg {
+      width: 1280px; /* 20 piksler mindre enn bildet pga padding */
+      height: 955px; /* 20 piksler mindre enn bildet pga padding */
+      padding: 10px;
+      background-image: url("petersburg_stor.jpg");
+      display: none; /* skjuler elementet */
+    }  
+    .newyork {
+      width: 900px;
+      padding: 50px;
+      color: #E0E0E0;
+      display: none; /* skjuler elementet */
+    }  
+  </style>
+</head>
+
+<body>
+
+<h1> Klikk på ett av bildene nedenfor </h1>
+
+<div class="innpakning">
+  <img src="roma_liten.jpg" width="250" height="160" id="romaBilde">
+  <img src="petersburg_liten.jpg" width="250" height="160" id="petersburgBilde">
+  <img src="newyork_liten.jpg" width="250" height="160" id="newyorkBilde">
+</div>
+
+<div class="forgrunnsvindu roma">
+  <video width="854" height="480" controls>
+      <source src="video_roma.mp4" type="video/mp4">
+  </video>
+  
+  <button class="lukk">Lukk vindu</button>
+</div>
+
+<div class="forgrunnsvindu petersburg">
+  <button class="lukk">Lukk vindu</button>
+</div>
+
+<div class="forgrunnsvindu newyork">
+  <h2> Hvilken bygning er på bildet du klikket på? <h2>
+  
+  <input type="text"> 
+   
+  <button id="gjett">Gjett</button>
+  
+  <p id="resultat"></p>
+  
+  <button class="lukk">Lukk vindu</button>
+</div>
+
+<script>
+// Henter de tre bildelementene
+var bilderEl = document.querySelectorAll("img");
+
+// Legger til lytter på hver av bildene
+for (var i = 0; i < bilderEl.length; i++) {
+  bilderEl[i].addEventListener("click", bildeklikk);
+}
+
+// Henter de tre forgrunnsvinduene
+var romaVinduEl = document.querySelector(".roma");
+var petersburgVinduEl = document.querySelector(".petersburg");
+var newyorkVinduEl = document.querySelector(".newyork");
+
+// Henter de tre lukke-knappene
+var knapperEl = document.querySelectorAll(".lukk");
+
+// Legger til lytter på hver av knappene
+for (var i = 0; i < knapperEl.length; i++) {
+  knapperEl[i].addEventListener("click", lukkVindu);
+}
+
+// Henter input-feltet, gjette-knappen og resultat-avsnittet
+var inputEl = document.querySelector("input");
+var gjettEl = document.querySelector("#gjett");
+var resultatEl = document.querySelector("#resultat");
+
+// Legger til en lytter på gjetteknappen
+gjettEl.addEventListener("click", sjekkSvar);
+
+// Funksjonen bildeklikk() kjører når vi klikker på et av bildene
+function bildeklikk(e) {
+  // Gjør riktig div-element synlig
+  if (e.target.id === "romaBilde") {
+    romaVinduEl.style.display = "block";
+  } else if (e.target.id === "petersburgBilde") {
+    petersburgVinduEl.style.display = "block";
+  } else {
+    newyorkVinduEl.style.display = "block";
+  }
+}
+
+// Funksjonen lukkVindu() lukker et vindu
+function lukkVindu() {
+  // Lukker alle vinduene (så slipper vi å sjekke hvilket som er åpent)
+  romaVinduEl.style.display = "none";
+  petersburgVinduEl.style.display = "none";
+  newyorkVinduEl.style.display = "none";
+}
+
+// Funksjonen sjekkSvar() sjekker om brukeren har gjettet riktig
+function sjekkSvar() {
+  // Lagrer det gjettede ordet i en variabel
+  var gjettet_bygg = inputEl.value;
+  
+  // Sjekker om gjettet_bygg er riktig og skriver ut en passende beskjed.
+  // Med denne løsningen må ordet staves helt korrekt, men vi unngår problemer 
+  // med store/små bokstaver ved hjelp av toLowerCase.
+  if (gjettet_bygg.toLowerCase() === "world trade center") {
+    resultatEl.innerHTML = "Du vet allerede noe om New York - hva med å lære mer?";
+  } else {
+    resultatEl.innerHTML = "Det var ikke rett - kanskje på tide med en New York-tur?";
+  }
+}
+
+</script>
+</body>
+</html>

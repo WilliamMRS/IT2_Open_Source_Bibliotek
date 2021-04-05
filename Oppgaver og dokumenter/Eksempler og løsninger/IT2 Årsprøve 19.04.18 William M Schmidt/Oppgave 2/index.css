@@ -1,0 +1,71 @@
+body {
+	background-color: whitesmoke;
+	font-family: sans-serif;
+	margin: 0px;
+	padding: 0px;
+	min-height: 100%;
+}
+
+#mainHeader{
+	margin: 0px;
+	padding: 10px;
+	width: 100%;
+	background-color: rgb(32, 209, 32);
+}
+
+#title{
+	margin: 0px;
+	padding: 0px;
+}
+
+#mainFooter{
+	position: fixed;
+	bottom: 0;
+	margin: 0px;
+	padding: 10px;
+	width: 100%;
+	background-color: darkgrey;
+}
+
+
+#footerInformation{
+	color: white;
+	margin:0px;
+	padding:0px;
+}
+
+button{
+	padding: 5px;
+	background-color: rgb(20, 199, 20);
+	color: white;
+	border-radius: 5px;
+}
+
+button:hover{
+	background-color: rgb(16, 150, 16);
+}
+
+.inputFields{
+	display: inline-block;
+	margin: 5px;
+}
+
+.description{
+	display: inline-block;
+}
+
+.inputDIV{
+	display: block;
+}
+
+.inputBox{
+	display: inline-block;
+}
+
+.outputBox{
+	display: block;
+}
+
+#responseText{
+	margin: 1%;
+}

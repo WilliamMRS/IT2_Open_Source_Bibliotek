@@ -1,0 +1,196 @@
+<html>
+<head>
+  <title>Oppgave 1</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #323232;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;
+    }
+    .valg {
+      width: 580px; 
+      height: 130px;
+      padding: 10px;
+      margin: 50px auto 0 auto; /* margin topp høyre bunn venstre */
+      background-color: #c0c0c0;
+    }
+    .innpakning {
+      width: 600px;
+      height: 355px;
+      background-color: #cce6ed;
+      margin: auto;
+      position: relative; /* posisjonerer innpakningen */
+      overflow: hidden; /* for å skjule bladet utenfor innpakningen */
+    }
+    .tre {
+      width: 167px;
+      height: 300px;
+      background-image: url("tre.png");
+      position: absolute; /* absoluttposisjonering (i forhold til innpakningen) */
+      bottom: 0px;
+      left: 70px;
+      animation-name: svaiendeTre;
+	  animation-duration: 0s; 
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;	  
+    }
+	@keyframes svaiendeTre {
+       0%  { transform: skew(0deg);  }
+       25% { transform: skew(2deg);  }
+       75% { transform: skew(-2deg); }
+      100% { transform: skew(0deg);  }	
+	}
+    .blad {
+      width: 50px;
+      height: 70px;
+      background-image: url("blad.png");
+      position: absolute; /* absoluttposisjonering (i forhold til treet) */
+      bottom: 150px;
+      left: 75px;  
+      opacity: 0; /* gjør bladet usynlig i utgangspunktet */
+      animation-duration:	2s; 
+      animation-iteration-count: infinite;
+      animation-timing-function: ease-in-out;  
+    }
+    @keyframes bladLettBris {
+       0%  { opacity: 1; left: 75px; }
+       25% { opacity: 1; left: 65px; }
+       75% { opacity: 1; left: 85px; }
+      100% { opacity: 1; left: 75px; }
+    }
+    @keyframes bladStivKuling {
+        0% { opacity: 0; left: 75px;   }
+       10% { opacity: 1; left: 75px;   }
+      100% { opacity: 1; left: -120px; }
+    }
+    .stolpe {
+      width: 10px;
+      height: 230px;
+      background-image: url("stolpe.png");
+      position: absolute; /* absoluttposisjonering (i forhold til innpakningen) */
+      bottom: 0px;
+      right: 145px;
+    }
+    .rotor {
+      width: 200px;
+      height: 200px;
+      background-image: url("rotor.png");
+      position: absolute; /* absoluttposisjonering (i forhold til innpakningen) */
+      right: 50px;
+      bottom: 130px;
+      animation-name: roter;
+      animation-duration:	0s; 
+      animation-iteration-count: infinite;
+      animation-timing-function: linear;
+    }
+    @keyframes roter {
+        0% { transform: rotate(0deg);   }
+      100% { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+<div class="valg">
+  <h3> Velg vindstyrke </h3>
+  <select id="vindstyrke">
+    <option value="stille">Stille</option>
+    <option value="lettBris">Lett bris</option>
+    <option value="stivKuling">Stiv kuling</option>
+  </select>
+  
+  <p id="visVindstyrke">
+    0 - 0,2 meter per sekund
+  </p>
+</div>
+
+<div class="innpakning">
+  <div class="tre">
+    <div class="blad"> </div>
+  </div>
+  <div class="stolpe"> </div>
+  <div class="rotor"> </div>
+</div>
+
+<audio>
+  <source src="sommervind.mp3" type="audio/mpeg">
+</audio>
+
+<script>
+// Henter HTML-elementer
+var vindstyrkeEl = document.querySelector("#vindstyrke");
+var visVindstyrkeEl = document.querySelector("#visVindstyrke");
+var treEl = document.querySelector(".tre");
+var bladEl = document.querySelector(".blad");
+var rotorEl = document.querySelector(".rotor");
+var lydEl = document.querySelector("audio");
+
+// Legger til en lytter på nedtrekksmenyen
+vindstyrkeEl.addEventListener("change", oppdater);
+
+// Funksjonen oppdater() kjøres når nedtrekksmenyen endres
+function oppdater() {
+  // Henter valgt vindstyrke fra nedtrekksmenyen
+  var valgtVind = vindstyrkeEl.value;
+
+  // Lager en tom variabel for melding til brukeren
+  var vindstyrkeMelding = "";
+ 
+  // Undersøker hvilken vindstyrke som er valgt 
+  if (valgtVind === "stille") {
+    
+	// Lager en melding med vindens hastighet
+    vindstyrkeMelding = "0 - 0,2 meter per sekund";  
+
+    // Stopper alle animasjoner   
+    treEl.style.animationDuration = "0s";
+    bladEl.style.animationDuration = "0s";
+    rotorEl.style.animationDuration = "0s";
+    
+    // Setter lyden på pause
+    lydEl.pause();
+  
+  } else if (valgtVind === "lettBris") {
+    
+	// Lager en melding med vindens hastighet
+    vindstyrkeMelding = "3,5 - 5,4 meter per sekund";
+	
+    // Angir riktig animasjon for bladet
+    bladEl.style.animationName = "bladLettBris";
+    bladEl.style.animationDuration = "5s";
+    // Stopper animasjonen for treet   
+    treEl.style.animationDuration = "0s";
+    // Setter hastigheten til rotoren
+    rotorEl.style.animationDuration = "2s";
+    
+    // Starter lyden	
+	lydEl.play();
+	
+  } else {
+    
+	// Lager en melding med vindens hastighet
+    vindstyrkeMelding = "13,9 - 17,1 meter per sekund";
+	
+    // Angir riktig animasjon for bladet
+    bladEl.style.animationName = "bladStivKuling";
+    bladEl.style.animationDuration = "1s";
+    // Starter animasjonen for treet   
+	treEl.style.animationDuration = "5s";
+	// Setter hastigheten til rotoren
+    rotorEl.style.animationDuration = "1s";
+    
+    // Starter lyden	
+	lydEl.play();
+  }
+
+  // Skriver ut vindstyrkemeldingen på nettsiden
+  visVindstyrkeEl.innerHTML = vindstyrkeMelding;
+}
+
+</script>
+
+</body>
+</html>

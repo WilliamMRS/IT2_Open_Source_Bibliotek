@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+    <head>
+		<meta charset="utf-8" />
+		<title> Dyrequiz </title> 
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+		<script src = "index.js"> </script>
+	</head>
+
+	<audio id = "rettLyd" src="../Ressurser/Riktig.mp3"></audio>
+	<audio id = "feilLyd" src="../Ressurser/Galt.mp3"></audio>
+
+	<body>	
+		<header id = "mainHeader">
+				<h1 id = "title" align = "center">Klikk på kua!</h1>
+		</header>
+
+		<div class = "rad1">
+				<img src="../Ressurser/Ku.png" alt="" class="dyreBilder" onclick = "sjekkDyr('Ku');">
+				<img src="../Ressurser/Gris.png" alt="" class="dyreBilder" onclick = "sjekkDyr('Gris');">
+		</div>
+		<div class = "rad2">
+				<img src="../Ressurser/Okse.png" alt="" class="dyreBilder" onclick = "sjekkDyr('Okse');">
+				<img src="../Ressurser/Kylling.png" alt="" class="dyreBilder" onclick = "sjekkDyr('Kylling');">
+		</div>
+
+		<h2 id = "responseText"></h2>
+
+		<footer id = "mainFooter">
+			<p align = "center" id = "footerInformation" style = "margin:0;"> William M Schmidt IT2 Årsprøve 19.04.2018 Oppgave 1</p>
+		</footer>
+		
+    </body>
+</html>

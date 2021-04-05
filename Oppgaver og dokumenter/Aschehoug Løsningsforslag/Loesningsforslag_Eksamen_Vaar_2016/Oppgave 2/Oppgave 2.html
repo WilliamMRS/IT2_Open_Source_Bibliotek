@@ -1,0 +1,139 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 2 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;	
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: #FEFEFE;
+      border: 3px solid black;	
+    }
+    .resultat {
+      margin: 20px 5px;
+      padding: 20px;
+      font-size: 3.5ex;
+   }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Quiz </h1>
+  
+  <p class="resultat"></p>
+
+</div>
+
+<script>
+// Henter inn div-element der vi vil plassere quizen
+var innpakningEl = document.querySelector(".innpakning");
+
+// Henter inn p-elementet der vi vil skrive ut poengsummen
+var resultatEl = document.querySelector(".resultat");
+
+// Lager en array med spørsmålsobjekter
+var quiz = [
+  { sporsmaal: "Hva betyr ordet Where?",
+    alternativer: ["Hvor", "Vi er", "Var", "Hvorfor"],  
+    fasit: ["riktig", "galt", "galt", "galt"]},
+  { sporsmaal: "Hvilke(t) ord kan legges til her? How are ...",
+    alternativer: ["you", "John doing?", "things", "the house", "the wife"],  
+    fasit: ["riktig", "galt", "riktig", "galt", "galt"]},
+  { sporsmaal: "Spill av lydfilen Oversetting.mp3 og velg riktig oversettelse:"
+			   + "<audio controls>"
+			   + "<source src='Oversetting.mp3' type='audio/mpeg'>"
+			   + "</audio>",
+    alternativer: ["Hei, mitt navn er Tom", "Jeg er Tom", "Kjenner du Tom?", "Når kommer Tom?"],  
+    fasit: ["galt", "galt", "riktig", "galt"]}
+];
+
+// Skriver oppgavene til nettsiden
+for (var i = 0; i < quiz.length; i++){
+
+  // Lager et p-element til hvert spørsmål
+  var sporsmaalEl = document.createElement("p");
+
+  // Skriver ut spørsmålsteksten
+  sporsmaalEl.innerHTML += "<h3>" + quiz[i].sporsmaal + "</h3>";
+  
+  // Lager avkrysnings-elementer for hvert av alternativene
+  for (var j = 0; j < quiz[i].alternativer.length; j++) {
+    // Lager et nytt input-element
+    var nyCheckbox = document.createElement("input");
+
+  	// Gir input-elementet typen "checkbox"
+    nyCheckbox.type = "checkbox";
+
+    // Gir avkrysningsboksen verdien til fasiten, slik 
+    // at vi kan undersøke om avkryssede bokser er 
+    // "riktig" eller "galt" når vi skal telle opp poeng.	
+    nyCheckbox.value = quiz[i].fasit[j];
+  
+    // Legger til avkrysningsboksen i spørsmålets p-element
+    sporsmaalEl.appendChild(nyCheckbox);
+	
+    // Legger til teksten til alternativet ved siden av 
+    // avkrsyningselementet.	
+    sporsmaalEl.innerHTML += quiz[i].alternativer[j] + "<br>";
+  }
+  
+  // Legger til p-elementet i innpakningen
+  innpakningEl.appendChild(sporsmaalEl);
+}
+
+// Legger til en knapp med teksten "Sjekk svar" 
+// til slutt. Knappen knyttes til en lytter og 
+// legges til nederst i innpakningselementet.
+var knapp = document.createElement("button");
+knapp.innerHTML = "Sjekk svar";
+knapp.addEventListener("click", finnPoeng);
+innpakningEl.appendChild(knapp);
+
+// Funksjonen finnPoeng() kjøres når knappen trykkes
+function finnPoeng(){
+  // Henter inn alle avkrysningselementene 
+  // (alle input-elementer med type="checkbox")
+  var alleCheckboxEl = document.querySelectorAll("input[type='checkbox']");
+ 
+  // Lager en variabel som skal holde på poengsummen 
+  var antallPoeng = 0;
+ 
+  // Går gjennom alle avkrysningsboksene  
+  for (var i = 0; i < alleCheckboxEl.length; i++) {
+    // Hvis en avkrysningsboks er huket av
+    if (alleCheckboxEl[i].checked) {
+      // Undersøk om alternativet er riktig
+      if (alleCheckboxEl[i].value === "riktig") {
+        // Hvis riktig, gi ett poeng
+        antallPoeng++;
+      } else {
+        //  Hvis feil, trekk fra ett poeng
+        antallPoeng--;
+      }
+    }
+  }
+
+  // Skriv ut poengsummen på nettsiden. Poengsummen kan bli negativ 
+  // (hvis brukeren velger flere feil enn riktig), vi skriver ut 
+  // poengsummen 0 hvis antallPoeng er negativ.
+  if (antallPoeng > 0) {
+    resultatEl.innerHTML = "Du fikk " + antallPoeng + " poeng!";
+  } else {
+    resultatEl.innerHTML = "Du fikk 0 poeng!";
+ }
+}
+</script>
+
+</body>
+</html>

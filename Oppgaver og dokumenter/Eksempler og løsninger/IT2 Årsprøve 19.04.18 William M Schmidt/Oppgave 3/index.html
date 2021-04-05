@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+    <head>
+		<meta charset="utf-8" />
+		<title> Værdata </title> 
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+		<script src = "index.js"> </script>
+		<script src = "../Bibliotek/openlib.js"></script>
+		<script src = "data.js"></script>
+	</head>
+	<body>	
+		<header id = "mainHeader">
+				<h1 id = "title" align = "center">Vinteren på Østlandet</h1>
+				<h4 style = "margin: 2px; padding: 0px; color: rgb(88, 88, 88);" align = "center"> Data fra 2010 - 2017</h4>
+		</header>
+		<div id = "inputDIV">
+			<select id="vinterSELECT" onchange="createOutput();">
+					<option value="null">Velg en Vinter</option>
+					<option value="16/17">2016/2017</option>
+					<option value="15/16">2015/2016</option>
+					<option value="14/15">2014/2015</option>
+					<option value="13/14">2013/2014</option>
+					<option value="12/13">2012/2013</option>
+					<option value="11/12">2011/2012</option>
+					<option value="10/11">2010/2011</option>
+			</select>
+
+			<select id="dataSELECT" onchange="createOutput();">
+					<option value="temperatur">Temperatur</option>
+					<option value="nedbør">Nedbør</option>
+			</select>
+
+			<p style = "margin: 10px;" id = "warningTekst">Vennligst velg en vinterperiode.</p>
+		</div>
+
+		<div id = "outputDIV">
+			<div id = "tabellOutput">
+				
+			</div>
+			<div id = "canvasOutput">
+				<div class = "canvasCheckbox">
+						<input id = "temperaturBox" type="checkbox" onchange = "displayDataGraphically(1);">
+						<p style = "display: inline">Vis temperatur data i grader Celsius</p>
+				</div>
+				<div class = "canvasCheckbox">
+					<input id = "nedbørBox"type="checkbox" onchange="displayDataGraphically(0);">
+					<p style = "display: inline">Vis nedbørs data i % av normalt nedbør</p>
+				</div>
+				<canvas id = "dataCanvas" height = "500px" width = "500px"></canvas>
+			</div>
+		</div>
+		<footer id = "mainFooter">
+			<p align = "center" id = "footerInformation" style = "margin:0;">William M Schmidt IT2 Årsprøve 19.04.2018 Oppgave 3</p>
+		</footer>
+		
+    </body>
+</html>

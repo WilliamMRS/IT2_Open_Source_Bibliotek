@@ -1,0 +1,77 @@
+<?xml version="1.0" standalone="no" ?>
+<!DOCTYPE project PUBLIC "-//audacityproject-1.3.0//DTD//EN" "http://audacity.sourceforge.net/xml/audacityproject-1.3.0.dtd" >
+<project xmlns="http://audacity.sourceforge.net/xml/" projname="Fra fjord til bord_data" version="1.3.0" audacityversion="2.0.6" sel0="0.0000000000" sel1="25.0000000000" vpos="16" h="0.0000000000" zoom="22.2394908230" rate="44100.0" snapto="off" selectionformat="tt:mm:ss + millisekunder">
+	<tags/>
+	<wavetrack name="Trekkspill_Come_to_the_Sea" channel="0" linked="1" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1102500">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000e8c.au" len="141979" min="-0.273219" max="0.264562" rms="0.031982"/>
+				</waveblock>
+				<waveblock start="141979">
+					<simpleblockfile filename="e0000a26.au" len="141979" min="-0.260147" max="0.24545" rms="0.045481"/>
+				</waveblock>
+				<waveblock start="283958">
+					<simpleblockfile filename="e0000046.au" len="262144" min="-0.388659" max="0.327418" rms="0.060312"/>
+				</waveblock>
+				<waveblock start="546102">
+					<simpleblockfile filename="e000066a.au" len="262144" min="-0.383883" max="0.374107" rms="0.077064"/>
+				</waveblock>
+				<waveblock start="808246">
+					<simpleblockfile filename="e0000147.au" len="151901" min="-0.300697" max="0.352931" rms="0.056376"/>
+				</waveblock>
+				<waveblock start="960147">
+					<simpleblockfile filename="e0000501.au" len="142353" min="-0.263355" max="0.261986" rms="0.04718"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="Trekkspill_Come_to_the_Sea" channel="1" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="0" rate="44100" gain="1.0" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1102500">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000cf7.au" len="141979" min="-0.273208" max="0.264577" rms="0.031982"/>
+				</waveblock>
+				<waveblock start="141979">
+					<simpleblockfile filename="e0000a42.au" len="141979" min="-0.260135" max="0.245448" rms="0.045481"/>
+				</waveblock>
+				<waveblock start="283958">
+					<simpleblockfile filename="e0000476.au" len="262144" min="-0.388646" max="0.327431" rms="0.060311"/>
+				</waveblock>
+				<waveblock start="546102">
+					<simpleblockfile filename="e0000b21.au" len="262144" min="-0.383843" max="0.3741" rms="0.077064"/>
+				</waveblock>
+				<waveblock start="808246">
+					<simpleblockfile filename="e00001d6.au" len="151901" min="-0.300686" max="0.35294" rms="0.056376"/>
+				</waveblock>
+				<waveblock start="960147">
+					<simpleblockfile filename="e0000d31.au" len="142353" min="-0.263348" max="0.261973" rms="0.04718"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+	<wavetrack name="måker" channel="2" linked="0" mute="0" solo="0" height="150" minimized="0" isSelected="1" rate="48000" gain="2.238721" pan="0.0">
+		<waveclip offset="0.00000000">
+			<sequence maxsamples="262144" sampleformat="262159" numsamples="1200000">
+				<waveblock start="0">
+					<simpleblockfile filename="e0000289.au" len="262144" min="-0.093767" max="0.108199" rms="0.009731"/>
+				</waveblock>
+				<waveblock start="262144">
+					<simpleblockfile filename="e0000f67.au" len="262144" min="-0.141608" max="0.133555" rms="0.016447"/>
+				</waveblock>
+				<waveblock start="524288">
+					<simpleblockfile filename="e0000038.au" len="262144" min="-0.19836" max="0.207373" rms="0.02582"/>
+				</waveblock>
+				<waveblock start="786432">
+					<simpleblockfile filename="e0000e61.au" len="262144" min="-0.159003" max="0.160292" rms="0.017371"/>
+				</waveblock>
+				<waveblock start="1048576">
+					<simpleblockfile filename="e0000a46.au" len="151424" min="-0.031772" max="0.035438" rms="0.00388"/>
+				</waveblock>
+			</sequence>
+			<envelope numpoints="0"/>
+		</waveclip>
+	</wavetrack>
+</project>

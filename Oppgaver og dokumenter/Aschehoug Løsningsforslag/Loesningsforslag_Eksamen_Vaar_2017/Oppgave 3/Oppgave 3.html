@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 3 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;	
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: white;
+      border: 3px solid black;	
+    }
+    #resultat {
+      padding: 30px;
+      font-size: 3ex; /* øker tekststørrelse */
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Beregn døgnproduksjon </h1>
+  
+  <p>Oppgi vindstyrker i meter per sekund.</p>
+  
+  Klokken 02:00 - 08:00
+  <input type="number" class="periode">
+
+  Klokken 08:00 - 14:00
+  <input type="number" class="periode">
+
+  Klokken 14:00 - 20:00
+  <input type="number" class="periode">
+
+  Klokken 20:00 - 02:00
+  <input type="number" class="periode">  
+  
+  <button>Beregn</button>
+  
+  <p id="resultat"></p>
+  
+</div>
+
+<script>
+// Henter inn HTML-elementer
+var knappEl = document.querySelector("button");
+var resultatEl = document.querySelector("#resultat");
+
+// Henter alle tallfeltene samtidig
+var periodeEl = document.querySelectorAll(".periode");
+
+// Legger til en lytter på knappen
+knappEl.addEventListener("click", beregn);
+
+// Funksjonen beregn finner døgnproduksjon
+function beregn() {
+  // Lager en tom variabel for å holde på døgnproduksjonen
+  var dognproduksjon = 0;
+  
+  // Lager en løkke for å hente ut verdiene fra tallfeltene
+  for (var i = 0; i < periodeEl.length; i++) {
+    // Henter ut verdien i tallfeltet
+	var periodeVindstyrke = Number(periodeEl[i].value);
+	
+	// Bruker funksjonen nedenfor for å finne wattproduksjon
+	var periodeWattproduksjon = finnWattproduksjon(periodeVindstyrke);
+	
+	// Øker døgnproduksjonen med 6 ganger wattproduksjonen
+	// (Fordi én periode består av seks timer)
+	dognproduksjon += 6 * periodeWattproduksjon;
+  }
+  
+  // Skriver ut døgnproduksjonen på nettsiden
+  resultatEl.innerHTML  = "Vindmøllen produserer " + dognproduksjon;
+  resultatEl.innerHTML += " watt i løpet av et døgn med de angitte vindstyrkene.";
+}
+
+// Lager en egen funksjon for å finne wattproduksjon per time
+function finnWattproduksjon(vindstyrke) {
+  // Lager en tom variabel for wattproduksjon
+  var wattproduksjon = 0;
+  
+  // Finner wattproduksjon
+  if (vindstyrke > 15) {
+    // Vinden er for sterk, vi endrer ikke wattproduksjon
+  } else if (vindstyrke >= 13.9) {
+    // Setter wattproduksjon
+	wattproduksjon = 500;
+  } else if (vindstyrke >= 10.8) {
+    // Setter wattproduksjon
+	wattproduksjon = 400;
+  } else if (vindstyrke >= 8) {
+    // Setter wattproduksjon
+	wattproduksjon = 150;  
+  } else if (vindstyrke >= 5.5) {
+    // Setter wattproduksjon
+	wattproduksjon = 60;
+  } else if (vindstyrke >= 3.4) {
+    // Setter wattproduksjon
+	wattproduksjon = 10;
+  } else if (vindstyrke >= 2.5) {
+    // Setter wattproduksjon
+	wattproduksjon = 2;
+  }  
+
+  // Returnerer wattproduksjonsverdien
+  return wattproduksjon;
+}
+
+</script>
+
+</body>
+</html>

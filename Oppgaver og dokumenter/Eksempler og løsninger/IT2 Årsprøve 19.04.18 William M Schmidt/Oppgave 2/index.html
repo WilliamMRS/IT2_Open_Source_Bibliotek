@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+    <head>
+		<meta charset="utf-8" />
+		<title> Måleenheter </title> 
+		<link rel="stylesheet" type="text/css" href="index.css" />
+		<link rel="shortcut icon" type="image/png" href="favicon.png"/>
+		<script src = "index.js"> </script>
+	</head>
+	<body>	
+		<header id = "mainHeader">
+				<h1 id = "title" align = "center">Konverter Måleenheter</h1>
+		</header>
+		
+		<div id = "måleEnheterApp">
+			<div class = "inputBox">
+					<div class = "inputDIV">
+							<input type="text" class="inputFields" type = "number" value = "0" id = "cup"><p class = "description">Cup(s)</p>
+					</div>
+					<div class = "inputDIV">
+							<input type="text" class="inputFields" type = "number" value = "0" id = "pint"><p class="description">Pint(s)</p>
+					</div>
+					<div class = "inputDIV">
+							<input type="text" class="inputFields" type = "number" value = "0" id = "ounce"><p class="description">Ounce(s)</p>
+					</div>
+
+					<button onclick = "updateResponseText();" style = "margin: 10px;">Konverter</button>
+			</div>
+
+			<div class = "outputBox">
+				<div id = "responseDIV">
+					<h3 algin = "center" id = "responseText">Desiliter: 0</h3>
+				</div>
+			</div>
+		</div>
+
+		<footer id = "mainFooter">
+			<p align = "center" id = "footerInformation" style = "margin:0;">William M Schmidt IT2 Årsprøve 19.04.2018 Oppgave 2</p>
+		</footer>
+		
+    </body>
+</html>

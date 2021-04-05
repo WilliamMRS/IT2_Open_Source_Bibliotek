@@ -1,0 +1,76 @@
+body {
+	background-color: whitesmoke;
+	font-family: sans-serif;
+	margin: 0px;
+	padding: 0px;
+	min-height: 100%;
+}
+
+#mainHeader{
+	margin: 0px;
+	padding: 10px;
+	width: 100%;
+	background-color: rgb(32, 209, 209);
+}
+
+#title{
+	margin: 0px;
+	padding: 0px;
+}
+
+#mainFooter{
+	position: fixed;
+	bottom: 0;
+	margin: 0px;
+	padding: 10px;
+	width: 100%;
+	background-color: darkgrey;
+}
+
+
+#footerInformation{
+	color: white;
+	margin:0px;
+	padding:0px;
+}
+
+button{
+	padding: 5px;
+	background-color: rgb(20, 199, 20);
+	color: white;
+	border-radius: 5px;
+}
+
+button:hover{
+	background-color: rgb(16, 150, 16);
+}
+
+#inputDIV{
+
+}
+
+#outputDIV{
+	margin: 20px;
+}
+
+Select{
+	margin: 10px;
+	background-color: lightcyan;
+	font-size: 12px;
+}
+
+#canvasOutput{
+	display: inline-block;
+	float: left;
+	width: 50%;
+}
+
+#tabellOutput{
+	float: left;
+	width: 50%;
+}
+
+.canvasCheckbox{
+	display: block;
+	height: 25px;
+}

@@ -1,0 +1,93 @@
+<!doctype html>
+<html>
+<head>
+  <title> Oppgave 2 </title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="brukerinput.css">
+  <style>
+    body {
+      background-color: #e0e0e0;
+      font-family: "Century Gothic", Arial, sans-serif;
+      font-size: 14px;
+      color: #323232;	
+    }
+    .innpakning {
+      width: 50%;
+      margin: auto;
+      padding: 5px;
+      background-color: white;
+      border: 3px solid black;	
+    }
+    #resultat {
+      padding: 30px;
+      font-size: 3ex; /* øker tekststørrelse */
+    }
+  </style>
+</head>
+<body>
+
+<div class="innpakning">
+
+  <h1> Beregn wattproduksjon per time </h1>
+  
+  <p>Oppgi vindstyrke i meter per sekund.</p>
+  
+  <input type="number" id="vindstyrke">
+
+  <button>Beregn</button>
+  
+  <p id="resultat"></p>
+  
+</div>
+
+<script>
+// Henter inn HTML-elementer
+var vindstyrkeEl = document.querySelector("#vindstyrke");
+var knappEl = document.querySelector("button");
+var resultatEl = document.querySelector("#resultat");
+
+// Legger til lytter på knappen
+knappEl.addEventListener("click", beregn);
+
+// Funksjon som beregner wattproduksjon
+function beregn() {
+  // Henter vindstyrken fra tallfeltet
+  var vindstyrke = Number(vindstyrkeEl.value);
+
+  // Lager en tom variabel for wattproduksjon
+  var wattproduksjon = 0;
+  
+  // Finner wattproduksjon
+  if (vindstyrke > 15) {
+    // Vinden er for sterk, vi endrer ikke wattproduksjon
+  } else if (vindstyrke >= 13.9) {
+    // Setter wattproduksjon
+	wattproduksjon = 500;
+  } else if (vindstyrke >= 10.8) {
+    // Setter wattproduksjon
+	wattproduksjon = 400;
+  } else if (vindstyrke >= 8) {
+    // Setter wattproduksjon
+	wattproduksjon = 150;  
+  } else if (vindstyrke >= 5.5) {
+    // Setter wattproduksjon
+	wattproduksjon = 60;
+  } else if (vindstyrke >= 3.4) {
+    // Setter wattproduksjon
+	wattproduksjon = 10;
+  } else if (vindstyrke >= 2.5) {
+    // Setter wattproduksjon
+	wattproduksjon = 2;
+  }  
+
+  // Skriver wattproduksjonen til nettsiden
+  resultatEl.innerHTML  = "Med en vindstyrke på ";  
+  resultatEl.innerHTML += vindstyrke + " meter per sekund ";
+  resultatEl.innerHTML += " gir vindmøllen cirka ";
+  resultatEl.innerHTML += wattproduksjon + " watt i timen.";
+}
+
+</script>
+
+</body>
+</html>
